@@ -1,30 +1,69 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import useMediaQuery from './hooks/useMediaQuery';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import './App.css';
+import Navbar from './components/Navbar';
+import Landing from './components/Landing';
+import LineGradient from './components/LinearGradient';
+import Projects from './components/Projects';
+import Testimonials from './components/Testimonials';
+import Contact from './components/Contact';
+import MySkills from './components/MySkills';
+import Footer from './components/Footer';
+import DotGroup from './components/DotGroup';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [selectedPage, setSelectedPage] = useState('home');
+  const [isTopOfPage, setIsTopOfPage] = useState(true);
+  const isDesktop = useMediaQuery('(min-width: 1060px)');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+        setSelectedPage('home');
+      }
+      if (window.scrollY !== 0) setIsTopOfPage(false);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app bg-deep-blue">
+      <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+      <div className="w-5/6 mx-auto md:h-full">
+        {isDesktop && <DotGroup selectedPage={selectedPage} setSelectedPage={setSelectedPage} />}
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('home')}>
+          <Landing setSelectedPage={setSelectedPage} />
+        </motion.div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <LineGradient />
+      <div className="w-5/6 mx-auto md:h-full ">
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('skills')}>
+          <MySkills />
+        </motion.div>
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+      <LineGradient />
+      <div className="w-5/6 mx-auto">
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('projects')}>
+          <Projects />
+        </motion.div>
+      </div>
+      <LineGradient />
+      {/* <div className="w-5/6 mx-auto md:h-full">
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('testimonials')}>
+          <Testimonials />
+        </motion.div>
+      </div> */}
+      <LineGradient />
+      <div className="w-5/6 mx-auto md:h-full">
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('contact')}>
+          <Contact />
+        </motion.div>
+      </div>
+      <Footer />
+    </div>
   );
 }
 
