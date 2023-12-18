@@ -1,19 +1,42 @@
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import LineGradient from './LinearGradient';
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const Contact = () => {
+  const form = useRef();
+  const [disableButton, setDisableButton] = useState(false);
+
   const {
     register,
     trigger,
+    reset,
     formState: { errors }
   } = useForm();
 
   const onSubmit = async e => {
-    console.log('~ e', e);
+    e.preventDefault();
     const isValid = await trigger();
-    if (!isValid) {
-      e.preventDefault();
+    console.log(isValid);
+    if (isValid) {
+      setDisableButton(true);
+      emailjs.sendForm('service_e0yblnd', 'template_cfli0ks', form.current, 'tmF67ljka4s6SYzJ0').then(
+        result => {
+          console.log(result.text);
+          Swal.fire({
+            title: 'Good job!',
+            text: 'Your message sent successfully!',
+            icon: 'success'
+          });
+          setDisableButton(false);
+          reset();
+        },
+        error => {
+          console.log(error.text);
+        }
+      );
     }
   };
 
@@ -68,9 +91,10 @@ const Contact = () => {
           }}
           className="basis-1/2 mt-10 md:mt-0"
         >
-          <form target="_blank" onSubmit={onSubmit} action="https://formsubmit.co/e8a5bdfa807605332f809e5656e27c6e" method="POST">
+          <form onSubmit={onSubmit} action="" method="POST" ref={form}>
             <input
-              className="w-full bg-blue font-semibold placeholder-opaque-black p-3"
+              className="w-full bg-white rounded-sm text-deep-blue font-semibold placeholder-opaque-black p-3"
+              name="name"
               type="text"
               placeholder="NAME"
               {...register('name', {
@@ -86,9 +110,10 @@ const Contact = () => {
             )}
 
             <input
-              className="w-full bg-blue font-semibold placeholder-opaque-black p-3 mt-5"
+              className="w-full bg-white rounded-sm text-deep-blue font-semibold placeholder-opaque-black p-3 mt-5"
               type="text"
               placeholder="EMAIL"
+              name="email"
               {...register('email', {
                 required: true,
                 pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
@@ -102,7 +127,7 @@ const Contact = () => {
             )}
 
             <textarea
-              className="w-full bg-blue font-semibold placeholder-opaque-black p-3 mt-5"
+              className="w-full bg-white rounded-sm text-deep-blue font-semibold placeholder-opaque-black p-3 mt-5"
               name="message"
               placeholder="MESSAGE"
               rows="4"
@@ -119,7 +144,7 @@ const Contact = () => {
               </p>
             )}
 
-            <button className="p-5 bg-yellow font-semibold text-deep-blue mt-5 hover:bg-red hover:text-white transition duration-500" type="submit">
+            <button disabled={disableButton} className="p-5 bg-yellow font-semibold text-deep-blue mt-5 rounded-sm hover:bg-red hover:text-white transition duration-500" type="submit">
               SEND ME A MESSAGE
             </button>
           </form>
