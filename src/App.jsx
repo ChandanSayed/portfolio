@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <div className="app bg-deep-blue overflow-x-hidden">
+    <div className="app bg-deep-blue">
       <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
       <div className="w-5/6 mx-auto md:h-full">
         {isDesktop && <DotGroup selectedPage={selectedPage} setSelectedPage={setSelectedPage} />}
