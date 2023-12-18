@@ -24,7 +24,7 @@ const Project = ({ title, img }) => {
       <div className={overlayStyles}>
         <p className="text-2xl font-playfair">{title}</p>
       </div>
-      <img src={`/public/images/${img}`} alt="Project" />
+      <img src={`/images/${img}`} alt="Project" />
     </motion.div>
   );
 };

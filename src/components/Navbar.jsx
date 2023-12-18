@@ -27,12 +27,13 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }) => {
             <Link page="Home" selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
             <Link page="Skills" selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
             <Link page="Projects" selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+            <Link page="About" selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
             {/* <Link page="Testimonials" selectedPage={selectedPage} setSelectedPage={setSelectedPage} /> */}
             <Link page="Contact" selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
           </div>
         ) : (
           <button className="rounded-full bg-red p-2" onClick={() => setIsMenuToggled(!isMenuToggled)}>
-            <img alt="menu-icon" src="../assets/menu-icon.svg" />
+            <img alt="menu-icon" src="/images/menu-icon.svg" />
           </button>
         )}
 
@@ -42,7 +43,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }) => {
             {/* CLOSE ICON */}
             <div className="flex justify-end p-12">
               <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-                <img alt="close-icon" src="../assets/close-icon.svg" />
+                <img alt="close-icon" src="/images/close-icon.svg" />
               </button>
             </div>
 

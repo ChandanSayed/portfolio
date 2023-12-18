@@ -11,6 +11,7 @@ import Contact from './components/Contact';
 import MySkills from './components/MySkills';
 import Footer from './components/Footer';
 import DotGroup from './components/DotGroup';
+import About from './components/About';
 
 function App() {
   const [selectedPage, setSelectedPage] = useState('home');
@@ -30,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <div className="app bg-deep-blue">
+    <div className="app bg-deep-blue overflow-x-hidden">
       <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
       <div className="w-5/6 mx-auto md:h-full">
         {isDesktop && <DotGroup selectedPage={selectedPage} setSelectedPage={setSelectedPage} />}
@@ -48,6 +49,12 @@ function App() {
       <div className="w-5/6 mx-auto">
         <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('projects')}>
           <Projects />
+        </motion.div>
+      </div>
+      <LineGradient />
+      <div className="w-5/6 mx-auto">
+        <motion.div margin="0 0 -200px 0" amount="all" onViewportEnter={() => setSelectedPage('about')}>
+          <About />
         </motion.div>
       </div>
       <LineGradient />

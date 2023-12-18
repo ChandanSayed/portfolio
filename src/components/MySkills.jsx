@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import useMediaQuery from '../hooks/useMediaQuery';
 import LineGradient from './LinearGradient';
 import Skill from './Skill';
 
